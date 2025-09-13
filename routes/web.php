@@ -7,18 +7,14 @@ Route::get('/', function () {
     return redirect('/series');
 });
 
-Route::get('/hail', function () {
-    echo "Hail to the King";
-    });
+Route::resource('/series', SeriesController::class)
+->only(['index', 'create', 'store','destroy']); //Controla geral todas as rotas (PODE USAR O METODO ONLY PRA DEIFINIR SOMENTE AS EXISTENTES)
 
-Route::controller(SeriesController::class)->group(function(){
-    Route::get('/series', 'index');
-    Route::get('/series/create', 'create')->name('series.create');
-    Route::get('/series/salvar', 'store');
+// Route::controller(SeriesController::class)->group(function(){
+//      Route::get('/series', 'index')->name('series.index');
+//      Route::get('/series/create', 'create')->name('series.create');
+//      Route::get('/series/salvar', 'store')->name('series.store');
 
-    // Route::get('/series',[SeriesController::class,'index']);
-    // Route::get('/series/criar',[SeriesController::class,'create']); //rota do metodo create
-    // Route::post('/series/salvar',[SeriesController::class,'store']);
+//});
 
-});
 

@@ -16,8 +16,8 @@ class SeriesController extends Controller
          *
         */
         $series = Serie::query()->orderBy('nome')->get();
-        compact('series');
-        return view('series.index')->with('series', @$series); //passando o caminho da view <-Blade->
+        
+        return view('series.index')->with('series', $series); //passando o caminho da view <-Blade->
     }
     public function create()
     {
@@ -38,7 +38,15 @@ class SeriesController extends Controller
         *SEM O USO DA MODEL SERIE - NECESSITA DO CODIGO SQL-C/ A MODEL SERIE CONEXAO AO DB MAIS FACIL
         DB::insert('INSERT INTO series (nome) VALUES (?)', [$nomeSerie]);
         */
-        return redirect('/series');
+        return to_route('series.index');
+       }
 
-    }
+       public function destroy(Request $request)
+       {
+
+        //dd ($request->route()); dump and die p/teste
+        Serie::destroy($request->series);
+
+        return to_route('series.index');
+       }
 }
