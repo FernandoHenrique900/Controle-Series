@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class SeriesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         /*
          *SEM O USO DA MODEL SERIE - NECESSITA DO CODIGO SQL-C/ A MODEL SERIE CONEXAO AO DB MAIS FACIL
@@ -16,8 +16,10 @@ class SeriesController extends Controller
          *
         */
         $series = Serie::query()->orderBy('nome')->get();
-        
-        return view('series.index')->with('series', $series); //passando o caminho da view <-Blade->
+        $mensagemSucesso = session('mensagem.sucesso'); //msg geral
+
+        return view('series.index')->with('series', $series)
+        ->with('mensagemSucesso', $mensagemSucesso); //passando o caminho da view <-Blade->
     }
     public function create()
     {
@@ -27,7 +29,7 @@ class SeriesController extends Controller
     public function store(Request $request)
     {
         // dd($request->all());
-        Serie::create($request->all()); //no request pode usar only/except p/casos diferentes.
+        $serie = Serie::create($request->all()); //no request pode usar only/except p/casos diferentes.
 
         // $nomeSerie = $request->input('nome');
         // $serie = new Serie();
@@ -38,15 +40,16 @@ class SeriesController extends Controller
         *SEM O USO DA MODEL SERIE - NECESSITA DO CODIGO SQL-C/ A MODEL SERIE CONEXAO AO DB MAIS FACIL
         DB::insert('INSERT INTO series (nome) VALUES (?)', [$nomeSerie]);
         */
-        return to_route('series.index');
+        return to_route('series.index')
+        ->with('mensagem.sucesso', "Série '{$serie->nome}' adicionada com sucesso");
        }
 
-       public function destroy(Request $request)
+       public function destroy(Serie $series,Request $request)//dois parametros na action
        {
-
         //dd ($request->route()); dump and die p/teste
-        Serie::destroy($request->series);
+        $series->delete();
 
-        return to_route('series.index');
+        return to_route('series.index')
+        ->with('mensagem.sucesso'," Série '{$series->nome}' removida com sucesso");
        }
 }
