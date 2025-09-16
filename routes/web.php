@@ -8,7 +8,8 @@ Route::get('/', function () {
 });
 
 Route::resource('/series', SeriesController::class)
-->only(['index', 'create', 'store','destroy']); //Controla geral todas as rotas (PODE USAR O METODO ONLY PRA DEIFINIR SOMENTE AS EXISTENTES)
+->except(['show']);
+//->only(['index', 'create', 'store','destroy', 'edit', 'update']); //Controla geral todas as rotas (PODE USAR O METODO ONLY PRA DEIFINIR SOMENTE AS EXISTENTES)
 
 // Route::controller(SeriesController::class)->group(function(){
 //      Route::get('/series', 'index')->name('series.index');

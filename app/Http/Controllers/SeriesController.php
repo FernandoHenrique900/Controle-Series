@@ -52,4 +52,22 @@ class SeriesController extends Controller
         return to_route('series.index')
         ->with('mensagem.sucesso'," Série '{$series->nome}' removida com sucesso");
        }
+       
+       public function edit(Serie $series)
+       //definição da rota é series/{serie}/edit
+       {
+
+        return view('series.edit')->with('serie', $series);
+
+       }
+       public function update(Serie $series, Request $request)
+       {
+        //$series->nome = $request->nome;
+        $series->fill($request->all()); //atributo fillable que filtra e só add oq é necessário
+        $series->save();
+
+        return to_route('series.index')
+        ->with('mensagem.sucesso', "Série '{$series->nome}' atualizada com sucesso!");
+
+       }
 }
