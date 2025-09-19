@@ -56,7 +56,7 @@ class SeriesController extends Controller
        public function edit(Serie $series)
        //definição da rota é series/{serie}/edit
        {
-
+        dd($series -> temporadas);
         return view('series.edit')->with('serie', $series);
 
        }
