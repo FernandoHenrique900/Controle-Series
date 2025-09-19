@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SeriesFormRequest;
 use App\Models\Serie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -26,9 +27,8 @@ class SeriesController extends Controller
         return view('series.create');
     }
 
-    public function store(Request $request)
+    public function store(SeriesFormRequest $request)
     {
-        // dd($request->all());
         $serie = Serie::create($request->all()); //no request pode usar only/except p/casos diferentes.
 
         // $nomeSerie = $request->input('nome');
@@ -60,7 +60,7 @@ class SeriesController extends Controller
         return view('series.edit')->with('serie', $series);
 
        }
-       public function update(Serie $series, Request $request)
+       public function update(Serie $series, SeriesFormRequest $request)
        {
         //$series->nome = $request->nome;
         $series->fill($request->all()); //atributo fillable que filtra e só add oq é necessário

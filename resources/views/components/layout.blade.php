@@ -12,6 +12,17 @@
 <body>
 <div class="container">
 <h1>{{  $title }}</h1>
+
+    @if ($errors->any()) {{-- variavel de erro p/todas a pages --}}
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif {{-- variavel de erro p/todas a pages --}}
+
 {{ $slot }}
 </div>
 </body>
