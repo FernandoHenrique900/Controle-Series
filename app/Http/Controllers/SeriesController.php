@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SeriesFormRequest;
-use App\Models\Serie;
+use App\Models\Series;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -16,7 +16,7 @@ class SeriesController extends Controller
         $series = DB::select('SELECT nome FROM series;');
          *
         */
-        $series = Serie::query()->orderBy('nome')->get();
+        $series = Series::all();
         $mensagemSucesso = session('mensagem.sucesso'); //msg geral
 
         return view('series.index')->with('series', $series)
@@ -29,7 +29,7 @@ class SeriesController extends Controller
 
     public function store(SeriesFormRequest $request)
     {
-        $serie = Serie::create($request->all()); //no request pode usar only/except p/casos diferentes.
+        $serie = Series::create($request->all()); //no request pode usar only/except p/casos diferentes.
 
         // $nomeSerie = $request->input('nome');
         // $serie = new Serie();
@@ -44,7 +44,7 @@ class SeriesController extends Controller
         ->with('mensagem.sucesso', "Série '{$serie->nome}' adicionada com sucesso");
        }
 
-       public function destroy(Serie $series,Request $request)//dois parametros na action
+       public function destroy(Series $series,Request $request)//dois parametros na action
        {
         //dd ($request->route()); dump and die p/teste
         $series->delete();
@@ -53,14 +53,14 @@ class SeriesController extends Controller
         ->with('mensagem.sucesso'," Série '{$series->nome}' removida com sucesso");
        }
        
-       public function edit(Serie $series)
+       public function edit(Series $series)
        //definição da rota é series/{serie}/edit
        {
         //dd($series -> temporadas);
         return view('series.edit')->with('serie', $series);
 
        }
-       public function update(Serie $series, SeriesFormRequest $request)
+       public function update(Series $series, SeriesFormRequest $request)
        {
         //$series->nome = $request->nome;
         $series->fill($request->all()); //atributo fillable que filtra e só add oq é necessário
