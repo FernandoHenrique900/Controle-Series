@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SeasonsController;
 use App\Http\Controllers\SeriesController;
 use Illuminate\Support\Facades\Route;
 
@@ -9,6 +10,7 @@ Route::get('/', function () {
 
 Route::resource('/series', SeriesController::class)
 ->except(['show']);
+
 //->only(['index', 'create', 'store','destroy', 'edit', 'update']); //Controla geral todas as rotas (PODE USAR O METODO ONLY PRA DEIFINIR SOMENTE AS EXISTENTES)
 
 // Route::controller(SeriesController::class)->group(function(){
@@ -19,3 +21,4 @@ Route::resource('/series', SeriesController::class)
 //});
 
 
+Route::get('/series/{series}/seasons',[SeasonsController::class, 'index'])->name('seasons.index');

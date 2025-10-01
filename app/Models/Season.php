@@ -8,7 +8,8 @@ use function PHPUnit\Framework\returnArgument;
 
 class Season extends Model
 {
-    use HasFactory; 
+    use HasFactory;
+    protected $fillable = ['number'];
 
     public function series()
     {

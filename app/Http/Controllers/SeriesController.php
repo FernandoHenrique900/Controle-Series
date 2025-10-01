@@ -29,8 +29,20 @@ class SeriesController extends Controller
 
     public function store(SeriesFormRequest $request)
     {
+        //dd($request->all()); --TESTE P/GARANTIR QUE ESTÁ CHEGANDO TUDO OK
         $serie = Series::create($request->all()); //no request pode usar only/except p/casos diferentes.
 
+        for ($i = 1; $i <= $request->seasonQty; $i++) {
+            $season = $serie->seasons()->create([
+                'number'=> $i,
+            ]);
+
+            for ($j = 1; $j <= $request->episodesPerSeason; $j++) {
+                $season->episodes()->create([
+                    'number'=> $j,
+                ]);
+            }
+        }
         // $nomeSerie = $request->input('nome');
         // $serie = new Serie();
         // $serie->nome = $nomeSerie;
